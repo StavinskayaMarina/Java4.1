@@ -31,7 +31,7 @@ public class TodosTest {
     }
 
     @Test
-    public void TodosLuckySearch() {
+    public void TodosLuckySearchOneTask() {
 
         SimpleTask simpleTask = new SimpleTask(17, "Посмотреть погоду");
 
@@ -80,6 +80,33 @@ public class TodosTest {
 
         Task[] expected = {};
         Task[] actual = todos.search("Вторник восемь часов");
+        ;
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void TodosLuckySearchMultipleTasks() {
+
+        SimpleTask simpleTask = new SimpleTask(17, "Отчет в девять");
+
+        String[] subtasks = {"Встреча в шесть", "Собрание в четыре", "Отчет в девять"};
+        Epic epic = new Epic(34, subtasks);
+
+        Meeting meeting = new Meeting(
+                46,
+                "Ежедневный селектор",
+                "Обучение новых сотрудников",
+                "В понедельник в девять утра"
+        );
+
+        Todos todos = new Todos();
+
+        todos.add(simpleTask);
+        todos.add(epic);
+        todos.add(meeting);
+
+        Task[] expected = {simpleTask,epic};
+        Task[] actual = todos.search("Отчет в девять");
         ;
         Assertions.assertArrayEquals(expected, actual);
     }
